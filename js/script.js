@@ -1,41 +1,49 @@
 var fixedBox = document.getElementById("fixed-box");
 var draggedBox = document.getElementById("dragged-box");
 var containerBox = document.getElementById("container");
-var mouseOffsetX = 0;
-var mouseOffsetY = 0;
-var maxMoveX = containerBox.offsetWidth - draggedBox.offsetWidth;
-var maxMoveY = containerBox.offsetHeight - draggedBox.offsetHeight;
-
+var initialOffsetX = 0;
+var initialOffsetY = 0;
+var maxX = containerBox.offsetWidth - draggedBox.offsetWidth;
+var maxY = containerBox.offsetHeight - draggedBox.offsetHeight;
 var isDragging = false;
 
 var mouseDown = function (event) {
-  mouseOffsetX = event.clientX - (draggedBox.offsetLeft + containerBox.offsetLeft);
-  mouseOffsetY = event.clientY - (draggedBox.offsetTop + containerBox.offsetTop);
+  initialOffsetX = event.clientX - (draggedBox.offsetLeft + containerBox.offsetLeft);
+  initialOffsetY = event.clientY - (draggedBox.offsetTop + containerBox.offsetTop);
   isDragging = true;
-
-  console.log("start");
 }
 
 var mouseDrag = function (event) {
   if (isDragging === true) {
-    moveX = event.clientX - containerBox.offsetLeft - mouseOffsetX;
-    moveY = event.clientY - containerBox.offsetTop - mouseOffsetY;
-    console.log(moveX);
-    console.log(moveY)
-    moveX = Math.min(maxMoveX, Math.max(0, moveX));
-    moveY = Math.min(maxMoveY, Math.max(0, moveY));
-    draggedBox.style.left = moveX + 'px';
-    draggedBox.style.top = moveY + 'px';
+    setPosition(event);
+    changeColor();
   }
 }
 
 var mouseUp = function () {
-  if (isDragging === true) {
-    isDragging = false;
-  }
-  console.log("stop");
+  isDragging = false;
 }
 
+var setPosition = function (event) {
+  positionX = event.clientX - containerBox.offsetLeft - initialOffsetX;
+  positionY = event.clientY - containerBox.offsetTop - initialOffsetY;
+  positionX = Math.min(maxX, Math.max(0, positionX));
+  positionY = Math.min(maxY, Math.max(0, positionY));
+  draggedBox.style.left = positionX + 'px';
+  draggedBox.style.top = positionY + 'px';
+}
+
+var changeColor = function () {
+  dragBox = draggedBox.getBoundingClientRect();
+  fixBox = fixedBox.getBoundingClientRect();
+  if (!(((dragBox.right <= fixBox.left) || (dragBox.left >= fixBox.right)))
+    && (!((dragBox.bottom <= fixBox.top) || (dragBox.top >= fixBox.bottom)))) {
+    fixedBox.style.backgroundColor = 'blue';
+  }
+  else {
+    fixedBox.style.backgroundColor = 'yellow';
+  }
+}
 
 draggedBox.addEventListener("mousedown", mouseDown);
 document.addEventListener("mousemove", mouseDrag);
