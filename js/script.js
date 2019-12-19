@@ -11,22 +11,32 @@ var isDragging = false;
 var mouseDown = function (event) {
   mouseOffsetX = event.clientX - (draggedBox.offsetLeft + containerBox.offsetLeft);
   mouseOffsetY = event.clientY - (draggedBox.offsetTop + containerBox.offsetTop);
-  console.log("start dragging");
+  isDragging = true;
+
+  console.log("start");
 }
 
 var mouseDrag = function (event) {
-  moveX = event.clientX - containerBox.offsetLeft - mouseOffsetX;
-  moveY = event.clientY - containerBox.offsetTop - mouseOffsetY;
-  moveX = Math.min(maxMoveX, Math.max(0, moveX));
-  moveY = Math.min(maxMoveY, Math.max(0, moveY));
-  draggedBox.style.left = moveX + 'px';
-  draggedBox.style.top = moveY + 'px';
+  if (isDragging === true) {
+    moveX = event.clientX - containerBox.offsetLeft - mouseOffsetX;
+    moveY = event.clientY - containerBox.offsetTop - mouseOffsetY;
+    console.log(moveX);
+    console.log(moveY)
+    moveX = Math.min(maxMoveX, Math.max(0, moveX));
+    moveY = Math.min(maxMoveY, Math.max(0, moveY));
+    draggedBox.style.left = moveX + 'px';
+    draggedBox.style.top = moveY + 'px';
+  }
 }
 
-var mouseDragover = function (event) {
-  event.preventDefault();
+var mouseUp = function () {
+  if (isDragging === true) {
+    isDragging = false;
+  }
+  console.log("stop");
 }
 
-draggedBox.addEventListener("dragstart", mouseDown);
-draggedBox.addEventListener("drag", mouseDrag);
-document.addEventListener("dragover", mouseDragover);
+
+draggedBox.addEventListener("mousedown", mouseDown);
+document.addEventListener("mousemove", mouseDrag);
+document.addEventListener("mouseup", mouseUp);
