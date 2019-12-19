@@ -1,0 +1,25 @@
+#container {
+  position: relative;
+  width: 1000px;
+  height: 800px;
+  margin: 30px auto 0 auto;
+  background-color: #f0f0f0;
+}
+
+.inner-box {
+  width: 80px;
+  height: 80px;
+}
+
+#fixed-box{
+  position: absolute;
+  top: 400px;
+  right: 400px;
+  background-color: yellow;
+}
+
+#dragged-box{
+  position: absolute;
+  background-color: green;
+}
+
