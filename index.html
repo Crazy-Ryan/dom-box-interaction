@@ -7,12 +7,13 @@
   <link rel="stylesheet" type="text/css" media="screen" href="./styles/style.css" />
 </head>
 
-<body>
+<body onmousemove="mouseDrag(event)" onmouseup="mouseUp(event)">
   <div id="container">
     <div id="fixed-box" class="inner-box"></div>
-    <div id="dragged-box" draggable="false" class="inner-box"></div>
+    <div id="dragged-box" draggable="false" class="inner-box" onmousedown="mouseDown(event)" ></div>
   </div>
-  <script src="./js/script.js"></script>
 </body>
+
+<script src="./js/script.js"></script>
 
 </html>
