@@ -45,7 +45,3 @@ var changeColor = function () {
     fixedBox.style.backgroundColor = 'yellow';
   }
 }
-
-// draggedBox.addEventListener("mousedown", mouseDown);
-// document.addEventListener("mousemove", mouseDrag);
-// document.addEventListener("mouseup", mouseUp);
